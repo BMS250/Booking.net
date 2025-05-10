@@ -4,6 +4,6 @@ namespace Booking.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public List<UserEvent> UserEvents { get; set; }
+        public virtual List<UserEvent> UserEvents { get; set; }
     }
 }

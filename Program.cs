@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Booking.Data;
 using Microsoft.AspNetCore.Identity;
+using Booking.Repositories;
+using Booking.Services;
 
 namespace Booking
 {
@@ -13,23 +15,25 @@ namespace Booking
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseLazyLoadingProxies().UseSqlServer(connectionString));
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
+            builder.Services.AddScoped<IEventRepository, EventRepository>();
+            builder.Services.AddScoped<IEventService, EventService>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddRazorPages();
 
-            //// Configure Identity
-            //builder.Services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.LoginPath = "/Identity/Account/Login";
-            //    options.LogoutPath = "/Identity/Account/Logout";
-            //    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-            //});
+            // Configure Identity
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            });
 
             var app = builder.Build();
 
@@ -48,7 +52,12 @@ namespace Booking
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.MapRazorPages();
+            app.MapDefaultControllerRoute();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+            
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
