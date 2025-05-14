@@ -1,0 +1,34 @@
+﻿body {
+    background: linear-gradient(135deg, #ffaf7b 0%, #d76d77 100%);
+    min-height: 100vh;
+}
+
+.register-card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    padding: 2rem 2.5rem;
+    margin-top: 3rem;
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+    border: none;
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
+    }

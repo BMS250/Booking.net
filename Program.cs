@@ -35,6 +35,32 @@ namespace Booking
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
 
+            // Fix: Use builder.Configuration instead of undefined 'config'
+            builder.Services.AddAuthentication()
+               .AddGoogle(options =>
+               {
+                   IConfigurationSection googleAuthNSection =
+                   builder.Configuration.GetSection("Authentication:Google");
+                   options.ClientId = googleAuthNSection["ClientId"];
+                   options.ClientSecret = googleAuthNSection["ClientSecret"];
+
+                   // Ensure the following NuGet package is installed in your project:
+                   // Microsoft.AspNetCore.Authentication.Google
+               });
+               //.AddFacebook(options =>
+               //{
+               //    IConfigurationSection FBAuthNSection =
+               //    builder.Configuration.GetSection("Authentication:FB");
+               //    options.ClientId = FBAuthNSection["ClientId"];
+               //    options.ClientSecret = FBAuthNSection["ClientSecret"];
+               //})
+               //.AddMicrosoftAccount(microsoftOptions =>
+               //{
+               //    microsoftOptions.ClientId = builder.Configuration["Authentication:Microsoft:ClientId"];
+               //    microsoftOptions.ClientSecret = builder.Configuration["Authentication:Microsoft:ClientSecret"];
+               //});
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -57,7 +83,7 @@ namespace Booking
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-            
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

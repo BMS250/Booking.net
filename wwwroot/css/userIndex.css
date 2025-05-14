@@ -1,0 +1,50 @@
+﻿body {
+    background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    min-height: 100vh;
+}
+
+.card {
+    border-radius: 1rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    }
+
+.badge.bg-primary {
+    background: linear-gradient(90deg, #36d1c4 0%, #5b86e5 100%);
+    color: #fff;
+}
+
+.badge.bg-success {
+    background: linear-gradient(90deg, #56ab2f 0%, #a8e063 100%);
+    color: #fff;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #ff512f 0%, #f09819 100%);
+    border: none;
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(90deg, #f09819 0%, #ff512f 100%);
+    }
+
+.btn-outline-primary {
+    border-color: #5b86e5;
+    color: #5b86e5;
+}
+
+    .btn-outline-primary:hover {
+        background: #5b86e5;
+        color: #fff;
+    }
+
+.pagination .page-item.active .page-link {
+    background: linear-gradient(90deg, #36d1c4 0%, #5b86e5 100%);
+    border: none;
+    color: #fff;
+}
